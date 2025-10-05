@@ -109,7 +109,7 @@ export const useTodosForm = defineStore('todosForm', () => {
       const initialForm = toRaw(initialData.value);
       const isEqual = deepEqual(currentForm, initialForm);
       isDeepEqual.value = isEqual;
-      
+
       // Update form disabled state immediately
       form.isFormDisabled = (
         form.isFormSubmitting ||
@@ -118,10 +118,14 @@ export const useTodosForm = defineStore('todosForm', () => {
         hasEmptyRequiredFields.value // Also disable if there are empty required fields
       );
     } else {
-      isDeepEqual.value = true; // If no initial data, consider as equal (form should be disabled initially)
+      // When there's no initial data, consider the form equal to initial state if it's empty
+      const currentForm = toRaw(form.ruleForm);
+      const isEmpty = Object.keys(currentForm).length === 0;
+      isDeepEqual.value = isEmpty;
       form.isFormDisabled = (
         form.isFormSubmitting ||
         form.formHasError ||
+        isEmpty || // Disable if form is empty (matches initial state)
         hasEmptyRequiredFields.value // Also disable if there are empty required fields
       );
     }
@@ -162,12 +166,12 @@ export const useTodosForm = defineStore('todosForm', () => {
   );
 
   const loading: ComputedRef<boolean> = computed(() => {
-     return (
-       !hasInitializationCompleted.value ||
-       form.isFormSubmitting ||
-       isLoading.value
-     );
-   });
+    return (
+      !hasInitializationCompleted.value ||
+      form.isFormSubmitting ||
+      isLoading.value
+    );
+  });
 
   const bodyDataArray = computed({
     get: () => {
@@ -256,6 +260,8 @@ export const useTodosForm = defineStore('todosForm', () => {
       if (response?.data?.success) {
         showSuccess();
         setInitialData();
+        // Update form equality after setting initial data to reflect the new state
+        updateFormEquality();
       }
     } catch (error: unknown) {
       // Handle server errors
@@ -312,7 +318,7 @@ export const useTodosForm = defineStore('todosForm', () => {
     form.ruleForm[newIndexStr] = { ...ruleFormItem };
     form.ruleFormErrors[newIndexStr] = { ...ruleFormItemErrors };
     form.body.data[newIndexStr] = FORM_TODOS_ITEM;
-    
+
     // Update form equality after adding item to track changes properly
     updateFormEquality();
   };

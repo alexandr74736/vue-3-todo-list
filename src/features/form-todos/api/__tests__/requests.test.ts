@@ -102,10 +102,12 @@ describe('Form Todos API Requests', () => {
       });
     });
 
-    it('should reject with error when no data in localStorage', async () => {
-      await expect(getTodosFromLocalStorage()).rejects.toEqual({
-        data: { errors: { no_data: 'Нет данных в LocalStorage' } },
-        statusCode: 404
+    it('should return empty todos when no data in localStorage', async () => {
+      const result = await getTodosFromLocalStorage();
+      
+      expect(result).toEqual({
+        data: { todos: {} },
+        statusCode: 200
       });
     });
 
