@@ -61,9 +61,18 @@ const aliases = [
 
 export default defineConfig({
   plugins: [vue(), vueDevTools()],
+  base: '/vue-3-todo-list/',
   server: {
     host: true
- },
+  },
+  preview: {
+    port: 5173,
+    host: true
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets'
+  },
   css: {
     preprocessorOptions: {
       scss: {
@@ -74,10 +83,10 @@ export default defineConfig({
         `
       }
     }
- },
+  },
   resolve: {
     alias: aliases
- },
+  },
   test: {
     environment: 'happy-dom',
     setupFiles: ['./tests/setup.ts'],
