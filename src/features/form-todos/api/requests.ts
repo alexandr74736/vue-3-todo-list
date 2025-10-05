@@ -76,9 +76,10 @@ export const getTodosFromLocalStorage = (): Promise<
       const todos = localStorage.getItem('todos');
 
       if (!todos) {
-        reject({
-          data: { errors: { no_data: 'Нет данных в LocalStorage' } },
-          statusCode: 404
+        // Вместо ошибки возвращаем пустой объект
+        resolve({
+          data: { todos: {} },
+          statusCode: 200
         });
         return;
       }
