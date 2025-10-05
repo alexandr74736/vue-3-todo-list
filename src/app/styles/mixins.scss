@@ -1,0 +1,29 @@
+@use "sass:math";
+@use "sass:string";
+
+@function adaptiveValueFunc($maxFontSize, $minFontSize, $maxWidth, $minWidth, $isPx: false) {
+
+    $slope: math.div(($maxFontSize - $minFontSize), ($maxWidth - $minWidth));
+    $slopeToFixed: math.div(round($slope * 10000), 10000);
+
+
+    $toFixedValue: math.div(-$minWidth * $slope + $minFontSize, 16);
+    $yAxisIntersection: math.div(round($toFixedValue * 10000), 10000);
+
+    $preferred: string.unquote("calc(#{$yAxisIntersection}rem + #{$slopeToFixed * 100}vw)");
+
+    $min: #{math.div($minFontSize, 16)}rem;
+    $max: #{math.div($maxFontSize, 16)}rem;
+
+    $result: null;
+
+    @if ($minFontSize > $maxFontSize) {
+        // Если минимальное значение больше максимального, используем обратный clamp
+        $result: string.unquote("clamp(#{$max}, #{$preferred}, #{$min})");
+    } @else {
+        // Обычный случай: минимальное значение меньше максимального
+        $result: string.unquote("clamp(#{$min}, #{$preferred}, #{$max})");
+    }
+
+    @return $result;
+}

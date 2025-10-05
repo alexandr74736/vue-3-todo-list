@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ui": ["./src/shared/ui"],
+      "@api": ["./src/shared/api"],
+      "@request": ["./src/shared/api/model"],
+      "@composables": ["./src/shared/composables"],
+      "@entities": ["./src/entities"],
+      "@features": ["./src/features"],
+      "@widgets": ["./src/widgets"],
+      "@pages": ["./src/pages"],
+      "@styles": ["./src/app/styles"],
+      "@icon": ["./src/shared/assets/icon"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
