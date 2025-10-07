@@ -375,8 +375,6 @@ export const useTodosForm = defineStore('todosForm', () => {
     // Wait a tick to ensure DOM updates before validating
     await nextTick();
 
-    // Re-validate the form after deletion
-    await validate();
     setLoading(false);
   };
 
