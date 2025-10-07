@@ -13,5 +13,6 @@
   margin-left: 0;
   padding: adaptiveValueFunc(35, 15, 3840, 320);
   height: 100%;
+  overflow: auto;
 }
 </style>

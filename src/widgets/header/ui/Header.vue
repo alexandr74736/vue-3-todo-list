@@ -9,9 +9,7 @@
         <div class="header__logo">Логотип</div>
       </div>
       <div class="header__right">
-        <div class="header__profile">
-          Демо пользователь
-        </div>
+        <div class="header__profile">Демо пользователь</div>
       </div>
     </div>
   </header>
@@ -25,6 +23,7 @@
   height: auto;
   padding: adaptiveValueFunc(32, 10, 3840, 320)
     adaptiveValueFunc(30, 15, 3840, 320);
+  background-color: #141414;
 
   .container {
     width: auto;
@@ -34,6 +33,7 @@
     display: flex;
     justify-content: space-between;
     padding: 0;
+    color: #fff;
   }
 
   &__left {
